@@ -534,7 +534,8 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
                     }
                 }
                 if (fReplacementOptOut) {
-                    return state.Invalid(false, REJECT_DUPLICATE, "txn-mempool-conflict");
+                    std::string errmsg = std::string("txn-mempool-conflict with ") + ptxConflicting->GetHash().ToString();
+                    return state.Invalid(false, REJECT_DUPLICATE, errmsg);
                 }
 
                 setConflicts.insert(ptxConflicting->GetHash());
